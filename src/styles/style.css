@@ -102,6 +102,13 @@ main {
   padding: 2rem 1rem;
 }
 
+.sem-resultados {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--tertiary-color);
+  padding: 2rem;
+}
+
 article {
   background: none;
   border-radius: 0;
