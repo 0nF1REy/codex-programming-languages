@@ -1,56 +1,56 @@
 [
   {
-    "nome": "JavaScript",
-    "descricao": "O JS é a linguagem da web.",
-    "ano": 1995,
+    "name": "JavaScript",
+    "description": "Linguagem de programação de alto nível, fundamental para o desenvolvimento web, que permite a criação de páginas interativas no front-end e a construção de aplicações de servidor com Node.js.",
+    "year": 1995,
     "link": "https://developer.mozilla.org/pt-BR/docs/Web/JavaScript"
   },
   {
-    "nome": "Python",
-    "descricao": "O Python é a linguagem da ciência de dados e IA.",
-    "ano": 1991,
+    "name": "Python",
+    "description": "Linguagem versátil e de sintaxe limpa, amplamente utilizada em desenvolvimento web, automação, inteligência artificial e análise de dados, conhecida por sua legibilidade e vasto ecossistema de bibliotecas.",
+    "year": 1991,
     "link": "https://www.python.org/doc/"
   },
   {
-    "nome": "Java",
-    "descricao": "Java é uma linguagem de programação orientada a objetos, popular para aplicações corporativas.",
-    "ano": 1995,
+    "name": "Java",
+    "description": "Linguagem robusta, orientada a objetos e independente de plataforma, projetada para o desenvolvimento de aplicações corporativas de larga escala, sistemas Android e soluções de big data.",
+    "year": 1995,
     "link": "https://docs.oracle.com/en/java/"
   },
   {
-    "nome": "C#",
-    "descricao": "C# (C Sharp) é uma linguagem moderna, orientada a objetos e desenvolvida pela Microsoft.",
-    "ano": 2000,
+    "name": "C#",
+    "description": "Linguagem moderna e orientada a objetos, desenvolvida pela Microsoft como parte da plataforma .NET. É amplamente empregada na criação de aplicações Windows, serviços web e desenvolvimento de jogos com a engine Unity.",
+    "year": 2000,
     "link": "https://learn.microsoft.com/pt-br/dotnet/csharp/"
   },
   {
-    "nome": "C++",
-    "descricao": "C++ é uma linguagem de programação de propósito geral com recursos de programação de baixo e alto nível.",
-    "ano": 1985,
+    "name": "C++",
+    "description": "Extensão da linguagem C, oferece alto desempenho e controle de baixo nível sobre recursos de hardware. É a escolha padrão para softwares que exigem performance crítica, como motores de jogos, sistemas embarcados e aplicações financeiras.",
+    "year": 1985,
     "link": "https://isocpp.org/get-started"
   },
   {
-    "nome": "PHP",
-    "descricao": "PHP é uma linguagem de script popular, especialmente adequada para o desenvolvimento web.",
-    "ano": 1995,
+    "name": "PHP",
+    "description": "Linguagem de script open-source focada no desenvolvimento server-side, sendo a base de muitos sistemas de gerenciamento de conteúdo (CMS) populares, como o WordPress, e frameworks como o Laravel.",
+    "year": 1995,
     "link": "https://www.php.net/manual/pt_BR/"
   },
   {
-    "nome": "TypeScript",
-    "descricao": "TypeScript é um superconjunto de JavaScript que adiciona tipagem estática opcional à linguagem.",
-    "ano": 2012,
+    "name": "TypeScript",
+    "description": "Superconjunto tipado do JavaScript que compila para JavaScript puro. Foi criado para desenvolver aplicações em larga escala, adicionando tipos estáticos que aumentam a segurança e a manutenibilidade do código.",
+    "year": 2012,
     "link": "https://www.typescriptlang.org/docs/"
   },
   {
-    "nome": "Ruby",
-    "descricao": "Ruby é uma linguagem de programação dinâmica e de código aberto com foco na simplicidade e produtividade.",
-    "ano": 1995,
+    "name": "Ruby",
+    "description": "Linguagem dinâmica e de código aberto, valorizada por sua sintaxe elegante e foco na produtividade do desenvolvedor. É a base do popular framework de desenvolvimento web Ruby on Rails.",
+    "year": 1995,
     "link": "https://www.ruby-lang.org/pt/documentation/"
   },
   {
-    "nome": "Go",
-    "descricao": "Go (ou Golang) é uma linguagem de programação de código aberto criada pelo Google, focada em simplicidade e eficiência.",
-    "ano": 2009,
+    "name": "Go",
+    "description": "Linguagem de programação compilada e de código aberto, criada pelo Google. Destaca-se pela sua simplicidade, alto desempenho e por um modelo de concorrência nativo, ideal para sistemas distribuídos e microsserviços.",
+    "year": 2009,
     "link": "https://go.dev/doc/"
   }
 ]
