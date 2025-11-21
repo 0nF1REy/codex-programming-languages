@@ -74,6 +74,7 @@ async function setup() {
     const header = document.querySelector("header");
     if (!header) return;
     const threshold = 122;
+
     const onScroll = () => {
       if (window.scrollY > threshold) {
         header.classList.add("header--scrolled");
@@ -81,8 +82,56 @@ async function setup() {
         header.classList.remove("header--scrolled");
       }
     };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
+
+    const mq = window.matchMedia("(min-width: 769px)");
+    let attached = false;
+
+    const attach = () => {
+      if (!attached) {
+        window.addEventListener("scroll", onScroll, { passive: true });
+        attached = true;
+      }
+      onScroll();
+    };
+
+    const detach = () => {
+      if (attached) {
+        window.removeEventListener("scroll", onScroll);
+        attached = false;
+      }
+
+      header.classList.remove("header--scrolled");
+    };
+
+    if (mq.matches) attach();
+    else detach();
+
+    const mqChangeHandler = (e) => {
+      if (e.matches) attach();
+      else detach();
+    };
+
+    let mqListenerType = null;
+
+    if (typeof mq.addEventListener === "function") {
+      mq.addEventListener("change", mqChangeHandler);
+      mqListenerType = "event";
+    } else if ("onchange" in mq) {
+      mq.onchange = mqChangeHandler;
+      mqListenerType = "onchange";
+    }
+
+    window.addEventListener("beforeunload", () => {
+      if (attached) window.removeEventListener("scroll", onScroll);
+      if (
+        mqListenerType === "event" &&
+        typeof mq.removeEventListener === "function"
+      ) {
+        mq.removeEventListener("change", mqChangeHandler);
+      } else if (mqListenerType === "onchange") {
+        mq.onchange = null;
+      }
+    });
   }
 
   setupHeaderScrollBehavior();

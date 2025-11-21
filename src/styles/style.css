@@ -20,9 +20,9 @@ body {
   font-family: "Quicksand", sans-serif;
   position: relative;
   min-height: 100vh;
-  display: flex; /* make page a column flex layout so footer can stick to bottom */
+  display: flex;
   flex-direction: column;
-  padding-bottom: 0; /* no extra bottom padding needed when using flex layout */
+  padding-bottom: 0;
 }
 
 header {
