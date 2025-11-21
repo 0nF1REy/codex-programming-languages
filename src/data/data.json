@@ -140,27 +140,6 @@
     "image": "assets/images/programming-languages/haskell.svg"
   },
   {
-    "name": "SQL",
-    "description": "Linguagem de consulta estruturada usada para gerenciar e manipular bancos de dados relacionais. É fundamental para a maioria das aplicações de software que dependem de armazenamento de dados estruturados.",
-    "year": 1974,
-    "link": "https://www.iso.org/standard/66803.html",
-    "image": "assets/images/programming-languages/sql.svg"
-  },
-  {
-    "name": "HTML",
-    "description": "HyperText Markup Language é a linguagem padrão de marcação para criação de páginas web. É a espinha dorsal de qualquer conteúdo exibido em um navegador.",
-    "year": 1993,
-    "link": "https://html.spec.whatwg.org/",
-    "image": "assets/images/programming-languages/html.svg"
-  },
-  {
-    "name": "CSS",
-    "description": "Cascading Style Sheets é uma linguagem de folha de estilo usada para descrever a apresentação de um documento escrito em uma linguagem de marcação, como HTML. Essencial para design responsivo e visualização web.",
-    "year": 1996,
-    "link": "https://www.w3.org/Style/CSS/",
-    "image": "assets/images/programming-languages/css.svg"
-  },
-  {
     "name": "Erlang",
     "description": "Linguagem de programação funcional projetada para construir sistemas distribuídos, tolerantes a falhas e em tempo real, famosa por seu uso em telecomunicações.",
     "year": 1986,
@@ -238,7 +217,7 @@
     "image": "assets/images/programming-languages/smalltalk.svg"
   },
   {
-    "name": "Assembly Language",
+    "name": "Assembly",
     "description": "Linguagem de programação de baixo nível que possui uma correspondência muito forte entre as instruções da linguagem e o código de máquina do processador. Essencial para otimização e drivers de hardware.",
     "year": 1949,
     "link": "https://www.asmcommunity.net/",
@@ -252,32 +231,11 @@
     "image": "assets/images/programming-languages/tcl.svg"
   },
   {
-    "name": "PowerShell",
-    "description": "Shell de linha de comando e linguagem de scripting desenvolvida pela Microsoft para automação de tarefas e gerenciamento de configurações em sistemas Windows e multiplataforma.",
-    "year": 2006,
-    "link": "https://docs.microsoft.com/en-us/powershell/",
-    "image": "assets/images/programming-languages/powershell.svg"
-  },
-  {
-    "name": "Bash",
-    "description": "Bourne Again SHell, o interpretador de linha de comando padrão na maioria dos sistemas Unix e Linux. É crucial para scripting de sistema e automação de tarefas administrativas.",
-    "year": 1989,
-    "link": "https://www.gnu.org/software/bash/",
-    "image": "assets/images/programming-languages/bash.svg"
-  },
-  {
     "name": "OCaml",
     "description": "Uma linguagem de programação da família ML, conhecida por seu forte sistema de tipos estático, inferência de tipos e foco em programação funcional e imperativa, com excelente desempenho.",
     "year": 1996,
     "link": "https://ocaml.org/",
     "image": "assets/images/programming-languages/ocaml.svg"
-  },
-  {
-    "name": "VHDL",
-    "description": "VHSIC Hardware Description Language. Uma linguagem de descrição de hardware usada para modelar sistemas digitais, como FPGAs e ASICs, na engenharia eletrônica.",
-    "year": 1987,
-    "link": "https://vhdlwhiz.com/",
-    "image": "assets/images/programming-languages/vhdl.svg"
   },
   {
     "name": "MATLAB",
@@ -299,13 +257,6 @@
     "year": 2016,
     "link": "https://reasonml.github.io/",
     "image": "assets/images/programming-languages/reasonml.svg"
-  },
-  {
-    "name": "Awk",
-    "description": "Linguagem de programação projetada para processamento de padrões e relatórios. É frequentemente usada para manipular dados baseados em texto em ambientes Unix/Linux.",
-    "year": 1977,
-    "link": "https://www.gnu.org/software/gawk/",
-    "image": "assets/images/programming-languages/awk.svg"
   },
   {
     "name": "Crystal",
