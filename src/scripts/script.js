@@ -69,6 +69,23 @@ async function setup() {
       iniciarBusca();
     }
   });
+
+  function setupHeaderScrollBehavior() {
+    const header = document.querySelector("header");
+    if (!header) return;
+    const threshold = 122;
+    const onScroll = () => {
+      if (window.scrollY > threshold) {
+        header.classList.add("header--scrolled");
+      } else {
+        header.classList.remove("header--scrolled");
+      }
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
+  setupHeaderScrollBehavior();
 }
 
 document.addEventListener("DOMContentLoaded", setup);

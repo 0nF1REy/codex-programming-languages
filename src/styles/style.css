@@ -25,7 +25,7 @@ body {
 }
 
 header {
-  padding: 2rem 0; /* keep vertical padding; horizontal spacing will be handled by inner container */
+  padding: 2rem 0;
   display: block;
   position: sticky;
   top: 0;
@@ -37,6 +37,9 @@ header {
   background-position: center;
   background-repeat: no-repeat;
   width: 100%;
+  transition: background-color 0.25s ease, border-bottom 0.25s ease,
+    background-image 0.25s ease, box-shadow 0.25s ease;
+  position: sticky;
 }
 
 .header-inner {
@@ -47,6 +50,17 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+}
+.header-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 header h1 {
@@ -221,6 +235,56 @@ article a:hover {
 .footer-links a i {
   font-size: 2rem;
   transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.header--transparent {
+  background-color: rgba(26, 33, 42, 0.55) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  background-image: none !important;
+  border-bottom: 1px solid rgba(71, 79, 83, 0.12) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: rgba(10, 12, 16, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 0;
+  transition: opacity 250ms ease, background-color 250ms ease,
+    box-shadow 250ms ease;
+  pointer-events: none;
+}
+
+.header--scrolled::before {
+  opacity: 1;
+}
+
+.header--scrolled {
+  border-bottom: 1px solid rgba(71, 79, 83, 0.12) !important;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.22) !important;
+  padding: 0.75rem 0 !important;
+  background-color: transparent !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.header--scrolled .header-logo {
+  height: 44px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header::before,
+  .header--scrolled::before,
+  header {
+    transition: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
 }
 
 .footer-links a:hover i {
