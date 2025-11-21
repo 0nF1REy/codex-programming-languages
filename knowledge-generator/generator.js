@@ -1,8 +1,14 @@
 import * as fs from "fs/promises";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const apiKey = process.env.GEMINI_API_KEY;
 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-const KNOWLEDGE_FILE = "knowledgeBase.json";
+
+const KNOWLEDGE_FILE = path.join(__dirname, "..", "src", "data", "data.json");
 
 const TOTAL_ITEMS = 25;
 
@@ -11,41 +17,78 @@ const responseSchema = {
   items: {
     type: "OBJECT",
     properties: {
-      nome: {
+      name: {
         type: "STRING",
-        description: "Nome da tecnologia (ex: React, MongoDB).",
+        description: "Nome da tecnologia.",
       },
-      descricao: {
+      description: {
         type: "STRING",
-        description: "Descrição concisa da tecnologia.",
+        description: "Descrição detalhada e clara.",
       },
-      data_criacao: {
-        type: "STRING",
-        description: "Ano de criação/lançamento (ex: '2013').",
+      year: {
+        type: "NUMBER",
+        description: "Ano de criação da tecnologia.",
       },
       link: {
         type: "STRING",
-        description: "URL oficial ou de documentação principal.",
+        description: "URL oficial da tecnologia.",
       },
-      tags: {
-        type: "ARRAY",
+      image: {
+        type: "STRING",
         description:
-          "Array de 3 a 5 strings que categorizam a tecnologia (ex: 'frontend', 'banco de dados', 'framework', 'linguagem de programação').",
-        items: { type: "STRING" },
+          "Caminho da imagem no formato assets/images/programming-languages/<nome>.svg",
       },
     },
-    required: ["nome", "descricao", "data_criacao", "link", "tags"],
+    required: ["name", "description", "year", "link", "image"],
   },
 };
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function generateNewKnowledge(existingKnowledge) {
-  const existingNames = existingKnowledge.map((item) => item.nome).join(", ");
+  const existingNames = existingKnowledge.map((item) => item.name).join(", ");
 
-  const systemPrompt = `Você é um especialista em tecnologia e linguagens de programação. Sua tarefa é criar ${TOTAL_ITEMS} novas entradas sobre diferentes tecnologias (linguagens, frameworks, ferramentas, bancos de dados, metodologias, etc.) com a mesma estrutura JSON. Garanta que cada entrada seja única e relevante. O foco é em termos atuais e amplamente usados em desenvolvimento de software.`;
+  const systemPrompt = `
+Você é um especialista em tecnologias e linguagens de programação. 
+Sua tarefa é gerar exatamente ${TOTAL_ITEMS} novas tecnologias seguindo ESTRITAMENTE o formato:
 
-  const userQuery = `Gere uma lista de ${TOTAL_ITEMS} novas tecnologias. Siga estritamente a estrutura JSON e o requisito de ser um ARRAY com EXATAMENTE ${TOTAL_ITEMS} objetos. Não inclua as 5 tecnologias iniciais (Python, JavaScript, Java, C++, Ruby) e NÃO use NENHUM DOS seguintes nomes: ${existingNames}.`;
+{
+  "name": "Nome da tecnologia",
+  "description": "Descrição clara e detalhada.",
+  "year": 1990,
+  "link": "https://site-oficial.com",
+  "image": "assets/images/programming-languages/<nome-em-kebab-case>.svg"
+}
+
+Regras obrigatórias:
+- O ARRAY deve conter EXATAMENTE ${TOTAL_ITEMS} itens.
+- Todos os nomes devem ser únicos.
+- NÃO repita nenhum nome já existente na base atual.
+- A propriedade "year" deve ser um número inteiro.
+- O campo "image" deve sempre seguir o padrão:
+  assets/images/programming-languages/<nome-da-tecnologia-minusculo-sem-espaços>.svg
+- As tecnologias devem ser populares, relevantes e amplamente utilizadas hoje.
+- NÃO use tags, NÃO use campos extras — apenas as 5 chaves:
+  name, description, year, link, image.
+`;
+
+  const userQuery = `
+Gere uma lista com EXATAMENTE ${TOTAL_ITEMS} novas tecnologias, sem repetir NENHUM dos seguintes nomes já existentes: ${existingNames}.
+
+O resultado deve ser um ARRAY JSON **somente** com objetos contendo:
+name, description, year, link, image.
+
+Formato obrigatório para TODOS:
+{
+  "name": "Nome",
+  "description": "Descrição detalhada da tecnologia.",
+  "year": 1990,
+  "link": "https://documentacao-oficial.com",
+  "image": "assets/images/programming-languages/<name>.svg"
+}
+
+Apenas responda com o JSON puro, sem explicações.
+`;
 
   const payload = {
     contents: [{ parts: [{ text: userQuery }] }],
