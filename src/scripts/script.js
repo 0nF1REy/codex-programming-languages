@@ -33,10 +33,13 @@ function exibirResultados(resultados) {
   resultados.forEach((lang) => {
     const article = document.createElement("article");
     article.innerHTML = `
-      <h2>${lang.name}</h2>
-      <p><strong>Ano de Criação:</strong> ${lang.year}</p>
-      <p>${lang.description}</p>
-      <a href="${lang.link}" target="_blank" rel="noopener noreferrer">Ver Documentação</a>
+      <img src="${lang.image}" alt="Logo ${lang.name}" class="lang-logo">
+      <div class="card-content">
+        <h2>${lang.name}</h2>
+        <p><strong>Ano de Criação:</strong> ${lang.year}</p>
+        <p>${lang.description}</p>
+        <a href="${lang.link}" target="_blank" rel="noopener noreferrer">Ver Documentação</a>
+      </div>
     `;
     cardContainer.appendChild(article);
   });
