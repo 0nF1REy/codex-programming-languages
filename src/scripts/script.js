@@ -32,15 +32,52 @@ function exibirResultados(resultados) {
 
   resultados.forEach((lang) => {
     const article = document.createElement("article");
-    article.innerHTML = `
-      <img src="${lang.image}" alt="Logo ${lang.name}" class="lang-logo">
-      <div class="card-content">
-        <h2>${lang.name}</h2>
-        <p><strong>Ano de Criação:</strong> ${lang.year}</p>
-        <p>${lang.description}</p>
-        <a href="${lang.link}" target="_blank" rel="noopener noreferrer">Ver Documentação</a>
-      </div>
-    `;
+
+    if (lang.image) {
+      const img = document.createElement("img");
+      img.className = "lang-logo";
+      img.alt = `Logo ${lang.name}`;
+      img.src = lang.image;
+
+      img.addEventListener("error", () => {
+        if (!img.dataset.fallbackUsed) {
+          img.dataset.fallbackUsed = "1";
+          img.src = "assets/images/placeholder.svg";
+          img.alt = "";
+          img.setAttribute("aria-hidden", "true");
+        } else {
+          img.hidden = true;
+          img.setAttribute("aria-hidden", "true");
+        }
+      });
+
+      article.appendChild(img);
+    }
+
+    const content = document.createElement("div");
+    content.className = "card-content";
+
+    const h2 = document.createElement("h2");
+    h2.textContent = lang.name;
+
+    const pYear = document.createElement("p");
+    pYear.innerHTML = `<strong>Ano de Criação:</strong> ${lang.year}`;
+
+    const pDesc = document.createElement("p");
+    pDesc.textContent = lang.description;
+
+    const a = document.createElement("a");
+    a.href = lang.link;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.textContent = "Ver Documentação";
+
+    content.appendChild(h2);
+    content.appendChild(pYear);
+    content.appendChild(pDesc);
+    content.appendChild(a);
+
+    article.appendChild(content);
     cardContainer.appendChild(article);
   });
 }

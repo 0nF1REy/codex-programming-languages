@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" aria-labelledby="title">
+  <title>Programming languages placeholder tile</title>
+  <!-- Centered rounded-square tile -->
+  <rect x="6" y="6" width="48" height="48" rx="8" fill="#2e3640"/>
+  <!-- Monoline code symbol </>
+       Crisp strokes, optimized for small size -->
+  <g fill="none" stroke="#7c91bf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M24 22 L18 30 L24 38"/>
+    <path d="M36 22 L42 30 L36 38"/>
+    <path d="M30 22 L30 38"/>
+  </g>
+  <!-- Tiny secondary accent highlight -->
+  <circle cx="30" cy="30" r="1.4" fill="#57bcbe"/>
+</svg>
