@@ -5,16 +5,19 @@
 }
 
 :root {
-  --primary-color: #8ab4f8;
-  --secondary-color: #e8eaed;
-  --tertiary-color: #9aa0a6;
-  --bg-color: #202124;
+  --bg-color-dark: #1a212a;
+  --font-color-main: #ebeeef;
+  --font-color-subtle: #68647c;
+  --border-color: #474f53;
+  --accent-primary: #7c91bf;
+  --accent-secondary: #57bcbe;
+  --accent-special-hover: #8b2b45;
 }
 
 body {
   margin: 0;
-  background: var(--bg-color);
-  color: var(--secondary-color);
+  background: var(--bg-color-dark);
+  color: var(--font-color-main);
   font-family: "Quicksand", sans-serif;
   position: relative;
   min-height: 100vh;
@@ -22,15 +25,27 @@ body {
 }
 
 header {
-  padding: 2rem 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  padding: 2rem 0; /* keep vertical padding; horizontal spacing will be handled by inner container */
+  display: block;
   position: sticky;
   top: 0;
-  background: var(--bg-color);
   z-index: 10;
-  border-bottom: 1px solid #3c4043;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-color-dark);
+  background-image: url("../assets/images/bg-overlay.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+}
+
+.header-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 1rem;
 }
 
@@ -39,7 +54,7 @@ header h1 {
 }
 
 .header-logo {
-  height: 45px;
+  height: 60px;
   display: block;
 }
 
@@ -51,47 +66,47 @@ header div {
 div input {
   padding: 0.375rem 0.75rem;
   border-radius: 1rem;
-  border: 1px solid var(--tertiary-color);
-  background: var(--bg-color);
+  border: 1px solid var(--font-color-subtle);
+  background: var(--bg-color-dark);
   font-family: inherit;
   font-size: 1.5rem;
   transition: all 0.2s ease;
   width: 30rem;
-  color: var(--secondary-color);
+  color: var(--font-color-main);
   margin-right: 0.5rem;
 }
 
 div input::placeholder {
   font-size: 1.2rem;
   font-weight: 300;
-  color: var(--tertiary-color);
+  color: var(--font-color-subtle);
 }
 
 div input:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 0.1rem var(--primary-color);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 0.1rem var(--accent-primary);
 }
 
 #botao-busca {
   padding: 1rem 2rem;
   border-radius: 1rem;
-  border: 1px solid var(--tertiary-color);
+  border: 1px solid var(--font-color-subtle);
   cursor: pointer;
   font-family: inherit;
   font-weight: 500;
   font-size: 1rem;
   white-space: nowrap;
   transition: all 0.2s ease;
-  background-color: var(--bg-color);
-  color: var(--secondary-color);
+  background-color: var(--bg-color-dark);
+  color: var(--font-color-main);
 }
 
 #botao-busca:hover {
-  background-color: var(--primary-color);
-  color: var(--bg-color);
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0.5rem var(--primary-color);
+  background-color: var(--accent-secondary);
+  color: var(--bg-color-dark);
+  border-color: var(--accent-secondary);
+  box-shadow: 0 0 0.5rem var(--accent-secondary);
 }
 
 #botao-busca:active {
@@ -107,7 +122,7 @@ main {
 .sem-resultados {
   text-align: center;
   font-size: 1.2rem;
-  color: var(--tertiary-color);
+  color: var(--font-color-subtle);
   padding: 2rem;
 }
 
@@ -121,7 +136,7 @@ article {
   margin-bottom: 1.25rem;
   box-shadow: none;
   transition: transform 0.3s ease, background-color 0.3s ease;
-  border-bottom: 1px solid #3c4043;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .lang-logo {
@@ -138,7 +153,7 @@ article {
 article:hover {
   transform: scale(1.01);
   cursor: pointer;
-  background-color: #28292d;
+  background-color: #242c37;
 }
 
 article h2 {
@@ -148,7 +163,7 @@ article h2 {
   border-bottom: none;
   padding-bottom: 0;
   margin-bottom: 0.25rem;
-  color: var(--primary-color);
+  color: var(--accent-primary);
 }
 
 article p {
@@ -156,16 +171,16 @@ article p {
   line-height: 1.6;
   font-size: 1rem;
   margin-bottom: 0.5rem;
-  color: var(--secondary-color);
+  color: var(--font-color-main);
 }
 
 article p strong {
-  color: var(--tertiary-color);
+  color: var(--font-color-subtle);
   font-weight: 400;
 }
 
 article a {
-  color: var(--primary-color);
+  color: var(--accent-primary);
   text-decoration: none;
   font-weight: 200;
 }
@@ -179,10 +194,10 @@ article a:hover {
   bottom: 0;
   left: 0;
   width: 100%;
-  color: var(--tertiary-color);
-  background-color: var(--bg-color);
+  color: var(--font-color-subtle);
+  background-color: var(--bg-color-dark);
   padding: 1.5rem 1rem;
-  border-top: 1px solid #3c4043;
+  border-top: 1px solid var(--border-color);
 }
 
 .footer-links {
@@ -195,7 +210,7 @@ article a:hover {
 }
 
 .footer-links a {
-  color: var(--secondary-color);
+  color: var(--font-color-main);
   text-decoration: none;
 }
 
@@ -205,14 +220,19 @@ article a:hover {
 }
 
 .footer-links a:hover i {
-  color: var(--primary-color);
+  color: var(--accent-special-hover);
   transform: scale(1.2);
 }
 
 @media (max-width: 768px) {
   header {
+    padding: 1rem 0;
+  }
+
+  .header-inner {
     flex-direction: column;
-    padding: 1rem;
+    padding: 0 1rem;
+    gap: 0.5rem;
   }
 
   header h1 {
