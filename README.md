@@ -10,61 +10,77 @@
 
 </div>
 
-## 📖 Descrição
+## 📖 Visão geral do repositório
 
-Cria e expande automaticamente uma base de conhecimento em JSON adicionando, em cada execução, 25 novas entradas únicas sobre tecnologias (linguagens, frameworks, ferramentas, bancos de dados, metodologias). A lógica usa a API Gemini para gerar conteúdo estruturado e valida/mescla o resultado com o arquivo local `knowledgeBase.json`.
+Este repositório reúne dois trabalhos complementares relacionados ao tema "linguagens e ferramentas de programação":
 
-O que ele faz (resumido)
+- Um site estático (em `src`) que apresenta um catálogo de linguagens/tecnologias e ativos (imagens, dados e estilos). Chamamos essa parte de **Codex**.
+- Uma ferramenta Node.js (`knowledge-generator`) para expandir automaticamente uma base de conhecimento em JSON usando a API Gemini, que gera entradas estruturadas sobre tecnologias.
 
-- Gera exatamente 25 novas entradas em formato JSON.
-- Evita repetir nomes já presentes na base.
-- Faz validação básica da resposta (garante que seja um ARRAY com 25 objetos).
-- Realiza tentativas com backoff exponencial em caso de falhas.
-- Atualiza (sobrescreve) o arquivo `knowledgeBase.json` com a base combinada.
+O objetivo conjunto é fornecer uma vitrine (site) alimentada por uma base de dados que pode ser aumentada automaticamente pelo gerador.
 
-Pré-requisitos
+## 📁 Estrutura principal
 
-- Node.js instalado (v16+ recomendado).
-- Chave da Gemini API.
+- `src/` — Código do site estático (HTML, CSS, JS), ativos e dados usados na interface.
+- `knowledge-generator/` — Script Node.js que gera novas entradas e mescla com a base local.
+- `package.json` / `package-lock.json` — Metadados do projeto e dependências.
+- `README.md` — Esta documentação.
+- `LICENSE` — Arquivo de licença (MIT).
 
-Como executar (resumido)
+## Conteúdo do site (Codex)
 
-1. Instale dependências:
+O diretório `src` contém um site leve que consome `data/data.json` e exibe informações sobre linguagens e tecnologias com imagens e estilos responsivos. Use-o para visualizar o catálogo localmente ou publicar em um host estático.
 
-   ```js
-   npm install
-   ```
+Como executar localmente (opções rápidas):
 
-2. Crie um arquivo `.env` na raiz com:
-   GEMINI_API_KEY="SUA_CHAVE_AQUI"
+1. Abrir diretamente: abra `src/index.html` no seu navegador (funciona para testes simples).
 
-3. Execute:
-   ```js
-   npm start
-   ```
+2. Servir via servidor estático (recomendado para testes JS/CORS):
 
-O que esperar
+```bash
+npx serve src
+# ou
+npx http-server src
+```
 
-- Ao finalizar, o arquivo `knowledgeBase.json` será atualizado com as entradas antigas + 25 novas geradas.
-- Logs no console informam sucesso, número de itens e possíveis erros.
+Esses comandos servem o conteúdo em `http://localhost:PORT` e refletem corretamente rotas e carga de assets.
 
-Onde ajustar comportamento
+## Gerador de conhecimento
 
-- Para alterar a quantidade gerada, edite a constante `TOTAL_ITEMS` em [generator.js](generator.js) (`TOTAL_ITEMS`).
-- Função responsável pela geração: [`generateNewKnowledge`](generator.js).
-- Fluxo principal: [`main`](generator.js).
+O gerador é um script Node.js que consulta a API Gemini para produzir novas entradas de conhecimento e mesclá-las em um arquivo JSON local. É pensado para manutenção da base de dados que alimenta o site.
 
-Arquivos principais
+Principais pontos:
 
-- [generator.js](generator.js) — script principal que chama a API e atualiza a base.
-- [knowledgeBase.json](knowledgeBase.json) — arquivo de dados que será atualizado.
-- [package.json](package.json) — configuração do projeto e script de start.
-- Crie [.env](.env) na raiz com a variável GEMINI_API_KEY.
+- Gera um lote de entradas por execução (configurável no script).
+- Evita duplicatas com a base existente.
+- Faz validação básica do formato retornado pela API.
+- Usa tentativas com backoff exponencial em falhas de rede/resposta.
 
-Avisos rápidos
+Pré-requisitos e execução:
 
-- O arquivo `knowledgeBase.json` será sobrescrito ao final do processo.
-- Verifique limites e custos da API Gemini antes de executar em escala.
+- Node.js (recomendado v16+)
+- Crie um arquivo `.env` na raiz com a chave da API:
+
+```bash
+GEMINI_API_KEY="SUA_CHAVE_AQUI"
+```
+
+Instalação e execução do gerador:
+
+```bash
+npm install
+npm start
+```
+
+Observações de segurança e custo:
+
+- Verifique limites, custos e políticas da API antes de executar em escala.
+- O script pode sobrescrever o arquivo de base local — faça backup se necessário.
+
+## Atualizações e manutenção
+
+- Para ajustar a quantidade de entradas geradas, edite a constante `TOTAL_ITEMS` em `knowledge-generator/generator.js`.
+- Se mudar caminhos de imagens ou ativos, sincronize `src/data/data.json` com o gerador para evitar referências quebradas.
 
 ---
 
