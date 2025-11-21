@@ -11,7 +11,6 @@
   --border-color: #474f53;
   --accent-primary: #7c91bf;
   --accent-secondary: #57bcbe;
-  --accent-special-hover: #8b2b45;
 }
 
 body {
@@ -288,7 +287,7 @@ article a:hover {
 }
 
 .footer-links a:hover i {
-  color: var(--accent-special-hover);
+  color: var(--accent-secondary);
   transform: scale(1.2);
 }
 
