@@ -21,6 +21,35 @@ function showSearchLoader() {
   if (loader) loader.setAttribute("aria-hidden", "false");
   const main = document.querySelector("main");
   if (main) main.setAttribute("aria-busy", "true");
+
+  try {
+    if (inputBusca) {
+      inputBusca.disabled = true;
+      inputBusca.setAttribute("aria-disabled", "true");
+    }
+    if (botaoBusca) {
+      botaoBusca.disabled = true;
+      botaoBusca.setAttribute("aria-disabled", "true");
+    }
+  } catch (e) {}
+
+  try {
+    const icon =
+      botaoBusca && botaoBusca.querySelector && botaoBusca.querySelector("i");
+    if (icon) {
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+      } else {
+        icon.classList.remove("icon-spin");
+        void icon.offsetWidth;
+        icon.classList.add("icon-loading");
+      }
+    }
+  } catch (e) {
+    console.warn("Icon spin failed", e);
+  }
 }
 
 function hideSearchLoader() {
@@ -28,6 +57,25 @@ function hideSearchLoader() {
   if (loader) loader.setAttribute("aria-hidden", "true");
   const main = document.querySelector("main");
   if (main) main.removeAttribute("aria-busy");
+  try {
+    const icon =
+      botaoBusca && botaoBusca.querySelector && botaoBusca.querySelector("i");
+    if (icon) {
+      icon.classList.remove("icon-loading");
+      icon.classList.remove("icon-spin");
+    }
+  } catch (e) {}
+
+  try {
+    if (inputBusca) {
+      inputBusca.disabled = false;
+      inputBusca.removeAttribute("aria-disabled");
+    }
+    if (botaoBusca) {
+      botaoBusca.disabled = false;
+      botaoBusca.removeAttribute("aria-disabled");
+    }
+  } catch (e) {}
 }
 
 async function buscarLinguagens() {

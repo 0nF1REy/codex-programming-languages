@@ -603,6 +603,27 @@ article a:hover {
   }
 }
 
+@keyframes icon-spin-360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.icon-spin {
+  display: inline-block;
+  transform-origin: 50% 50%;
+  animation: icon-spin-360 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) 1;
+}
+
+.icon-loading {
+  display: inline-block;
+  transform-origin: 50% 50%;
+  animation: spin 0.9s linear infinite;
+}
+
 .search-loader[aria-hidden="true"] {
   display: none;
 }
