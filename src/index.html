@@ -45,19 +45,75 @@
     </main>
 
     <footer class="footer">
-      <ul class="footer-links">
-        <li>
-          <a
-            href="https://github.com/0nF1REy"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i class="fab fa-github"></i>
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="./index.html" class="brand-link">
+            <img
+              src="./assets/images/isotipo-codex.svg"
+              alt="Codex logo"
+              class="footer-logo"
+            />
           </a>
-        </li>
-      </ul>
+          <span class="footer-tagline">
+            Um pequeno catálogo de linguagens de programação —
+            <br> 
+              Descubra a
+              história, os casos de uso e os links.
+            </br>
+          </span>
+        </div>
+
+        <div class="footer-links-group">
+          <h4>Explorar</h4>
+          <ul class="footer-nav">
+            <li><a href="./index.html">Início</a></li>
+            <li><a href="#languages">Linguagens</a></li>
+            <li>
+              <a href="./data/data.json" target="_blank" rel="noopener"
+                >Dados brutos</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-contact">
+          <h4>Contato</h4>
+          <p><a href="mailto:hello@example.com">alanryan619@gmail.com</a></p>
+          <div class="social">
+            <a
+              href="https://github.com/0nF1REy"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              ><i class="fab fa-github"></i
+            ></a>
+            <a
+              href="https://www.linkedin.com/in/alan-ryan-b115ba228/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              ><i class="fab fa-linkedin"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <small
+          >&copy; <span id="footer-year"></span> Codex of Programming Languages.
+          Todos os direitos reservados.</small
+        >
+      </div>
     </footer>
 
     <script src="./scripts/script.js"></script>
+    <script>
+      (function () {
+        try {
+          var el = document.getElementById("footer-year");
+          if (el) el.textContent = new Date().getFullYear();
+        } catch (e) {}
+      })();
+    </script>
   </body>
 </html>
