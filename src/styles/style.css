@@ -576,3 +576,37 @@ article a:hover {
   );
   transform-origin: left center;
 }
+
+.search-loader {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 12, 16, 0.6);
+  z-index: 9998;
+}
+
+.search-spinner {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 6px solid rgba(255, 255, 255, 0.08);
+  border-top-color: var(--accent-primary);
+  animation: spin 1s linear infinite;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.search-loader[aria-hidden="true"] {
+  display: none;
+}
+
+.search-loader[aria-hidden="false"] {
+  display: flex;
+}

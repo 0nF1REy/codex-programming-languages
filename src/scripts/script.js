@@ -5,6 +5,31 @@ const inputBusca = document.querySelector("header input");
 const cardContainer = document.querySelector(".card-container");
 let isIntroAnimated = false;
 
+function ensureSearchLoader() {
+  if (document.getElementById("search-loader")) return;
+  const loader = document.createElement("div");
+  loader.id = "search-loader";
+  loader.className = "search-loader";
+  loader.setAttribute("aria-hidden", "true");
+  loader.innerHTML = `<div class="search-spinner" role="status" aria-label="Carregando resultados"></div>`;
+  document.body.appendChild(loader);
+}
+
+function showSearchLoader() {
+  ensureSearchLoader();
+  const loader = document.getElementById("search-loader");
+  if (loader) loader.setAttribute("aria-hidden", "false");
+  const main = document.querySelector("main");
+  if (main) main.setAttribute("aria-busy", "true");
+}
+
+function hideSearchLoader() {
+  const loader = document.getElementById("search-loader");
+  if (loader) loader.setAttribute("aria-hidden", "true");
+  const main = document.querySelector("main");
+  if (main) main.removeAttribute("aria-busy");
+}
+
 async function buscarLinguagens() {
   if (dados.length > 0) {
     return dados;
@@ -27,6 +52,7 @@ function exibirResultados(resultados) {
 
   if (resultados.length === 0) {
     cardContainer.innerHTML = `<p class="sem-resultados">Nenhuma linguagem encontrada.</p>`;
+    hideSearchLoader();
     return;
   }
 
@@ -85,13 +111,23 @@ function exibirResultados(resultados) {
       stagger: 0.08,
       duration: 0.5,
       ease: "power3.out",
+      onComplete: () => {
+        hideSearchLoader();
+      },
     });
+  } else {
+    hideSearchLoader();
   }
 }
 
 async function iniciarBusca() {
+  showSearchLoader();
+
   const linguagens = await buscarLinguagens();
-  if (linguagens.length === 0) return;
+  if (linguagens.length === 0) {
+    hideSearchLoader();
+    return;
+  }
 
   const termoBusca = inputBusca.value.toLowerCase();
   const resultados = linguagens.filter((lang) =>
