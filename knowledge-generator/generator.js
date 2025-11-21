@@ -2,7 +2,7 @@ import * as fs from "fs/promises";
 
 const apiKey = process.env.GEMINI_API_KEY;
 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-const KNOWLEDGE_FILE = "baseDeConhecimento.json";
+const KNOWLEDGE_FILE = "knowledgeBase.json";
 
 const TOTAL_ITEMS = 25;
 
