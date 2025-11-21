@@ -54,7 +54,7 @@ async function iniciarBusca() {
 
   const termoBusca = inputBusca.value.toLowerCase();
   const resultados = linguagens.filter((lang) =>
-    lang.nome.toLowerCase().includes(termoBusca)
+    lang.name.toLowerCase().includes(termoBusca)
   );
   exibirResultados(resultados);
 }
