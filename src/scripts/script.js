@@ -162,7 +162,6 @@ async function setup() {
   if (typeof gsap !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
     runIntroAnimation();
-    setupFooterAnimation();
   }
 }
 
@@ -277,21 +276,6 @@ function runIntroAnimation() {
     { y: 14, autoAlpha: 0, stagger: 0.06, duration: 0.45, ease: "power2.out" },
     "-=.35"
   );
-}
-
-function setupFooterAnimation() {
-  gsap.from(".footer-inner > *", {
-    scrollTrigger: {
-      trigger: ".footer",
-      start: "top 90%",
-      toggleActions: "play none none resume",
-    },
-    autoAlpha: 0,
-    y: 40,
-    duration: 0.8,
-    stagger: 0.2,
-    ease: "power3.out",
-  });
 }
 
 document.addEventListener("DOMContentLoaded", setup);
