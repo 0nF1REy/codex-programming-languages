@@ -50,6 +50,7 @@ header {
   justify-content: space-between;
   gap: 1rem;
 }
+
 .header-inner {
   max-width: 80rem;
   margin: 0 auto;
@@ -67,7 +68,7 @@ header h1 {
 }
 
 .header-logo {
-  height: 60px;
+  height: 70px;
   display: block;
 }
 
