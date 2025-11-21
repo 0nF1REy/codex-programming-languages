@@ -129,6 +129,22 @@ div input:focus {
   transform: scale(0.98);
 }
 
+#botao-busca[disabled],
+.btn--empty[disabled] {
+  pointer-events: none;
+  cursor: default;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: rgbargba(61, 60, 60, 0.02);
+  color: rgba(255, 255, 255, 0.9);
+  box-shadow: none;
+  opacity: 1;
+}
+
+#botao-busca {
+  transition: background-color 140ms ease, color 140ms ease,
+    border-color 140ms ease;
+}
+
 main {
   max-width: 80rem;
   margin: 0 auto;

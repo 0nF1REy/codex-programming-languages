@@ -110,9 +110,17 @@ function onBotaoClick(event) {
       inputBusca.value = "";
       inputBusca.focus();
     }
+
     lastSearchTerm = null;
     pendingSearchTerm = null;
     setButtonToSearch();
+
+    try {
+      if (botaoBusca) {
+        botaoBusca.disabled = true;
+        botaoBusca.setAttribute("aria-disabled", "true");
+      }
+    } catch (e) {}
     return;
   }
 
@@ -122,6 +130,24 @@ function onBotaoClick(event) {
 function onInputChange() {
   try {
     const val = inputBusca ? inputBusca.value : "";
+
+    if (!val || val.trim() === "") {
+      try {
+        if (botaoBusca) {
+          botaoBusca.disabled = true;
+          botaoBusca.setAttribute("aria-disabled", "true");
+        }
+      } catch (e) {}
+      setButtonToSearch();
+      return;
+    } else {
+      try {
+        if (botaoBusca) {
+          botaoBusca.disabled = false;
+          botaoBusca.removeAttribute("aria-disabled");
+        }
+      } catch (e) {}
+    }
     const valLower = val.toLowerCase();
     if (
       lastSearchTerm !== null &&
@@ -131,6 +157,21 @@ function onInputChange() {
       setButtonToClear();
     } else {
       setButtonToSearch();
+    }
+  } catch (e) {}
+}
+
+function updateButtonAvailability() {
+  try {
+    const val = inputBusca ? inputBusca.value || "" : "";
+    if (!botaoBusca) return;
+    if (!val || val.trim() === "") {
+      botaoBusca.disabled = true;
+      botaoBusca.setAttribute("aria-disabled", "true");
+      setButtonToSearch();
+    } else {
+      botaoBusca.disabled = false;
+      botaoBusca.removeAttribute("aria-disabled");
     }
   } catch (e) {}
 }
@@ -255,6 +296,7 @@ function postSearchFinalize() {
     }
   } catch (e) {}
   pendingSearchTerm = null;
+  updateButtonAvailability();
 }
 
 async function iniciarBusca() {
@@ -294,6 +336,13 @@ async function setup() {
   lastSearchTerm = null;
   pendingSearchTerm = null;
 
+  try {
+    if (botaoBusca) {
+      botaoBusca.disabled = true;
+      botaoBusca.setAttribute("aria-disabled", "true");
+    }
+  } catch (e) {}
+
   const linguagensIniciais = await buscarLinguagens();
   exibirResultados(linguagensIniciais);
 
@@ -303,7 +352,14 @@ async function setup() {
     inputBusca.addEventListener("input", onInputChange);
     inputBusca.addEventListener("keyup", (event) => {
       if (event.key === "Enter") {
-        iniciarBusca();
+        try {
+          const val = inputBusca ? inputBusca.value || "" : "";
+          if (val.trim() !== "") {
+            iniciarBusca();
+          } else {
+            event.preventDefault();
+          }
+        } catch (e) {}
       }
     });
   }
