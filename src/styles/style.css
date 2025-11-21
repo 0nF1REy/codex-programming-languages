@@ -647,3 +647,20 @@ article a:hover {
 .search-loader[aria-hidden="false"] {
   display: flex;
 }
+
+.empty-input-message {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 96px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--font-color-main);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  z-index: 99999;
+}

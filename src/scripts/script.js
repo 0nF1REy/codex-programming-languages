@@ -176,6 +176,28 @@ function updateButtonAvailability() {
   } catch (e) {}
 }
 
+function showEmptyInputMessage(text) {
+  try {
+    let el = document.getElementById("empty-input-msg");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "empty-input-msg";
+      el.className = "empty-input-message";
+      el.setAttribute("role", "status");
+      el.setAttribute("aria-live", "polite");
+      document.body.appendChild(el);
+    }
+    el.textContent = text;
+    el.style.opacity = "1";
+    clearTimeout(el._hideTimer);
+    el._hideTimer = setTimeout(() => {
+      try {
+        el.style.opacity = "0";
+      } catch (e) {}
+    }, 1800);
+  } catch (e) {}
+}
+
 function equalByteLength(a, b) {
   try {
     if (typeof TextEncoder !== "undefined") {
@@ -357,7 +379,8 @@ async function setup() {
           if (val.trim() !== "") {
             iniciarBusca();
           } else {
-            event.preventDefault();
+              event.preventDefault();
+              showEmptyInputMessage("Digite algo para buscar");
           }
         } catch (e) {}
       }
