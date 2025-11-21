@@ -1,7 +1,8 @@
 {
   "name": "codex-programming-languages",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A curated collection of programming language data and assets used to generate knowledge cards and website content.",
+  "type": "module",
   "scripts": {
     "start": "node -r dotenv/config ./knowledge-generator/generator.js"
   },
@@ -12,8 +13,20 @@
     "assets",
     "frontend"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "Alan Ryan da Silva Domingues",
+    "email": "alanryan619@gmail.com",
+    "url": "https://github.com/0nF1REy"
+  },
+  "license": "MIT",
+  "homepage": "https://0nf1rey.github.io/codex-programming-languages/src/index.html",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0nF1REy/codex-programming-languages.git"
+  },
+  "bugs": {
+    "url": "https://github.com/0nF1REy/codex-programming-languages/issues"
+  },
   "dependencies": {
     "dotenv": "^16.4.5"
   }
