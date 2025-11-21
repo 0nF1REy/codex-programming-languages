@@ -172,6 +172,53 @@ async function setup() {
   }
 
   setupHeaderScrollBehavior();
+  if (typeof gsap !== "undefined") runIntroAnimation();
 }
 
 document.addEventListener("DOMContentLoaded", setup);
+
+function runIntroAnimation() {
+  const pre = document.getElementById("preloader");
+  if (!pre || typeof gsap === "undefined") return;
+  const tl = gsap.timeline();
+  tl.set(document.body, { overflow: "hidden" });
+  tl.from(".preloader-inner", {
+    autoAlpha: 0,
+    y: 24,
+    duration: 0.6,
+    ease: "power2.out",
+  });
+  tl.to(
+    ".preloader-logo",
+    { scale: 1.06, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 1 },
+    "-=.2"
+  );
+  tl.to(
+    ".preloader-bar span",
+    { width: "100%", duration: 0.8, ease: "power2.out" },
+    "-=.4"
+  );
+  tl.to(
+    "#preloader",
+    {
+      autoAlpha: 0,
+      pointerEvents: "none",
+      duration: 0.6,
+      onComplete: () => {
+        pre.style.display = "none";
+        gsap.set(document.body, { overflow: "" });
+      },
+    },
+    "+=0.15"
+  );
+  tl.from(
+    "header",
+    { y: -18, autoAlpha: 0, duration: 0.6, ease: "power2.out" },
+    "<"
+  );
+  tl.from(
+    ".card-container article",
+    { y: 14, autoAlpha: 0, stagger: 0.06, duration: 0.45, ease: "power2.out" },
+    "-=.35"
+  );
+}
