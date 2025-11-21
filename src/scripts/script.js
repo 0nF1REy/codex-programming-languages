@@ -4,7 +4,7 @@ const botaoBusca = document.getElementById("botao-busca");
 const inputBusca = document.querySelector("header input");
 const cardContainer = document.querySelector(".card-container");
 let isIntroAnimated = false;
-let lastSearchTerm = null; 
+let lastSearchTerm = null;
 let pendingSearchTerm = null;
 
 function ensureSearchLoader() {
@@ -84,7 +84,6 @@ function setButtonToSearch() {
   if (!botaoBusca) return;
   const icon = botaoBusca.querySelector && botaoBusca.querySelector("i");
   if (icon) {
-
     icon.classList.remove("icon-loading", "icon-spin");
     icon.className = "fa-solid fa-magnifying-glass";
   }
@@ -285,6 +284,16 @@ async function iniciarBusca() {
 }
 
 async function setup() {
+  try {
+    if (inputBusca) {
+      inputBusca.value = "";
+      inputBusca.autocomplete = "off";
+      inputBusca.removeAttribute && inputBusca.removeAttribute("value");
+    }
+  } catch (e) {}
+  lastSearchTerm = null;
+  pendingSearchTerm = null;
+
   const linguagensIniciais = await buscarLinguagens();
   exibirResultados(linguagensIniciais);
 
