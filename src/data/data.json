@@ -179,7 +179,7 @@
     "description": "Linguagem de programação funcional-primeira, desenvolvida pela Microsoft. Roda na plataforma .NET e é valorizada por sua concisão, robustez e segurança de tipos.",
     "year": 2005,
     "link": "https://fsharp.org/",
-    "image": "assets/images/programming-languages/f-sharp.svg"
+    "image": "assets/images/programming-languages/fsharp.svg"
   },
   {
     "name": "Zig",
@@ -221,7 +221,7 @@
     "description": "Linguagem de programação de baixo nível que possui uma correspondência muito forte entre as instruções da linguagem e o código de máquina do processador. Essencial para otimização e drivers de hardware.",
     "year": 1949,
     "link": "https://www.asmcommunity.net/",
-    "image": "assets/images/programming-languages/assembly-language.svg"
+    "image": "assets/images/programming-languages/assembly.svg"
   },
   {
     "name": "Tcl",
