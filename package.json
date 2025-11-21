@@ -1,6 +1,6 @@
 {
   "name": "codex-programming-languages",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A curated collection of programming language data and assets used to generate knowledge cards and website content.",
   "type": "module",
   "scripts": {
