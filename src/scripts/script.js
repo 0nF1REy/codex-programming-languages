@@ -4,6 +4,8 @@ const botaoBusca = document.getElementById("botao-busca");
 const inputBusca = document.querySelector("header input");
 const cardContainer = document.querySelector(".card-container");
 let isIntroAnimated = false;
+let lastSearchTerm = null; 
+let pendingSearchTerm = null;
 
 function ensureSearchLoader() {
   if (document.getElementById("search-loader")) return;
@@ -78,6 +80,73 @@ function hideSearchLoader() {
   } catch (e) {}
 }
 
+function setButtonToSearch() {
+  if (!botaoBusca) return;
+  const icon = botaoBusca.querySelector && botaoBusca.querySelector("i");
+  if (icon) {
+
+    icon.classList.remove("icon-loading", "icon-spin");
+    icon.className = "fa-solid fa-magnifying-glass";
+  }
+  botaoBusca.dataset.mode = "search";
+  botaoBusca.setAttribute("aria-label", "Buscar");
+  botaoBusca.title = "Buscar";
+}
+
+function setButtonToClear() {
+  if (!botaoBusca) return;
+  const icon = botaoBusca.querySelector && botaoBusca.querySelector("i");
+  if (icon) {
+    icon.classList.remove("icon-loading", "icon-spin");
+    icon.className = "fa-solid fa-xmark";
+  }
+  botaoBusca.dataset.mode = "clear";
+  botaoBusca.setAttribute("aria-label", "Limpar busca");
+  botaoBusca.title = "Limpar busca";
+}
+
+function onBotaoClick(event) {
+  if (botaoBusca && botaoBusca.dataset.mode === "clear") {
+    if (inputBusca) {
+      inputBusca.value = "";
+      inputBusca.focus();
+    }
+    lastSearchTerm = null;
+    pendingSearchTerm = null;
+    setButtonToSearch();
+    return;
+  }
+
+  iniciarBusca();
+}
+
+function onInputChange() {
+  try {
+    const val = inputBusca ? inputBusca.value : "";
+    const valLower = val.toLowerCase();
+    if (
+      lastSearchTerm !== null &&
+      valLower === lastSearchTerm &&
+      equalByteLength(val, lastSearchTerm)
+    ) {
+      setButtonToClear();
+    } else {
+      setButtonToSearch();
+    }
+  } catch (e) {}
+}
+
+function equalByteLength(a, b) {
+  try {
+    if (typeof TextEncoder !== "undefined") {
+      const ta = new TextEncoder().encode(a || "");
+      const tb = new TextEncoder().encode(b || "");
+      return ta.length === tb.length;
+    }
+  } catch (e) {}
+  return (a || "").length === (b || "").length;
+}
+
 async function buscarLinguagens() {
   if (dados.length > 0) {
     return dados;
@@ -101,6 +170,7 @@ function exibirResultados(resultados) {
   if (resultados.length === 0) {
     cardContainer.innerHTML = `<p class="sem-resultados">Nenhuma linguagem encontrada.</p>`;
     hideSearchLoader();
+    postSearchFinalize();
     return;
   }
 
@@ -161,14 +231,36 @@ function exibirResultados(resultados) {
       ease: "power3.out",
       onComplete: () => {
         hideSearchLoader();
+        postSearchFinalize();
       },
     });
   } else {
     hideSearchLoader();
+    postSearchFinalize();
   }
 }
 
+function postSearchFinalize() {
+  try {
+    const val = inputBusca ? inputBusca.value : "";
+    if (
+      pendingSearchTerm !== null &&
+      val.toLowerCase() === pendingSearchTerm &&
+      equalByteLength(val, pendingSearchTerm)
+    ) {
+      lastSearchTerm = pendingSearchTerm;
+      setButtonToClear();
+    } else {
+      lastSearchTerm = null;
+      setButtonToSearch();
+    }
+  } catch (e) {}
+  pendingSearchTerm = null;
+}
+
 async function iniciarBusca() {
+  const termoBusca = inputBusca ? inputBusca.value.toLowerCase() : "";
+  pendingSearchTerm = termoBusca;
   showSearchLoader();
 
   const linguagens = await buscarLinguagens();
@@ -176,8 +268,6 @@ async function iniciarBusca() {
     hideSearchLoader();
     return;
   }
-
-  const termoBusca = inputBusca.value.toLowerCase();
   const resultados = linguagens.filter((lang) =>
     lang.name.toLowerCase().includes(termoBusca)
   );
@@ -198,12 +288,16 @@ async function setup() {
   const linguagensIniciais = await buscarLinguagens();
   exibirResultados(linguagensIniciais);
 
-  botaoBusca.addEventListener("click", iniciarBusca);
-  inputBusca.addEventListener("keyup", (event) => {
-    if (event.key === "Enter") {
-      iniciarBusca();
-    }
-  });
+  if (botaoBusca) botaoBusca.addEventListener("click", onBotaoClick);
+
+  if (inputBusca) {
+    inputBusca.addEventListener("input", onInputChange);
+    inputBusca.addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        iniciarBusca();
+      }
+    });
+  }
 
   setupHeaderScrollBehavior();
 
@@ -211,6 +305,8 @@ async function setup() {
     gsap.registerPlugin(ScrollTrigger);
     runIntroAnimation();
   }
+
+  setButtonToSearch();
 }
 
 function setupHeaderScrollBehavior() {
