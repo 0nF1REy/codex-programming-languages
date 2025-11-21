@@ -49,11 +49,11 @@ async function generateNewKnowledge(existingKnowledge) {
   const existingNames = existingKnowledge.map((item) => item.name).join(", ");
 
   const systemPrompt = `
-Você é um especialista em tecnologias e linguagens de programação. 
-Sua tarefa é gerar exatamente ${TOTAL_ITEMS} novas tecnologias seguindo ESTRITAMENTE o formato:
+Você é um especialista em linguagens de programação. 
+Sua tarefa é gerar exatamente ${TOTAL_ITEMS} NOVAS LINGUAGENS DE PROGRAMAÇÃO seguindo ESTRITAMENTE o formato:
 
 {
-  "name": "Nome da tecnologia",
+  "name": "Nome da linguagem",
   "description": "Descrição clara e detalhada.",
   "year": 1990,
   "link": "https://site-oficial.com",
@@ -61,31 +61,36 @@ Sua tarefa é gerar exatamente ${TOTAL_ITEMS} novas tecnologias seguindo ESTRITA
 }
 
 Regras obrigatórias:
+- Apenas linguagens de programação. NÃO inclua frameworks, bibliotecas, APIs, bancos de dados, ferramentas ou sistemas.
 - O ARRAY deve conter EXATAMENTE ${TOTAL_ITEMS} itens.
 - Todos os nomes devem ser únicos.
 - NÃO repita nenhum nome já existente na base atual.
 - A propriedade "year" deve ser um número inteiro.
 - O campo "image" deve sempre seguir o padrão:
-  assets/images/programming-languages/<nome-da-tecnologia-minusculo-sem-espaços>.svg
-- As tecnologias devem ser populares, relevantes e amplamente utilizadas hoje.
+  assets/images/programming-languages/<nome-da-linguagem-minusculo-sem-espaços>.svg
+- As linguagens devem ser populares, relevantes e amplamente utilizadas atualmente.
 - NÃO use tags, NÃO use campos extras — apenas as 5 chaves:
   name, description, year, link, image.
 `;
 
   const userQuery = `
-Gere uma lista com EXATAMENTE ${TOTAL_ITEMS} novas tecnologias, sem repetir NENHUM dos seguintes nomes já existentes: ${existingNames}.
+Gere uma lista com EXATAMENTE ${TOTAL_ITEMS} novas LINGUAGENS DE PROGRAMAÇÃO, sem repetir NENHUM dos nomes já existentes: ${existingNames}.
 
 O resultado deve ser um ARRAY JSON **somente** com objetos contendo:
 name, description, year, link, image.
 
-Formato obrigatório para TODOS:
+Formato obrigatório para TODOS os itens:
 {
-  "name": "Nome",
-  "description": "Descrição detalhada da tecnologia.",
+  "name": "Nome da linguagem",
+  "description": "Descrição detalhada da linguagem de programação.",
   "year": 1990,
   "link": "https://documentacao-oficial.com",
-  "image": "assets/images/programming-languages/<name>.svg"
+  "image": "assets/images/programming-languages/<nome-da-linguagem-minusculo-sem-espaços>.svg"
 }
+
+IMPORTANTE:
+- Apenas linguagens de programação. NÃO inclua frameworks, bibliotecas, APIs, bancos de dados ou ferramentas.
+- Todas as linguagens devem ser reais, populares e relevantes atualmente.
 
 Apenas responda com o JSON puro, sem explicações.
 `;
