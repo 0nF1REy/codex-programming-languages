@@ -20,7 +20,9 @@ body {
   font-family: "Quicksand", sans-serif;
   position: relative;
   min-height: 100vh;
-  padding-bottom: 6rem;
+  display: flex; /* make page a column flex layout so footer can stick to bottom */
+  flex-direction: column;
+  padding-bottom: 0; /* no extra bottom padding needed when using flex layout */
 }
 
 header {
@@ -131,6 +133,7 @@ main {
   max-width: 80rem;
   margin: 0 auto;
   padding: 2rem 1rem;
+  flex: 1 0 auto;
 }
 
 .sem-resultados {
@@ -241,16 +244,17 @@ article a:hover {
 .footer-inner {
   max-width: 80rem;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 200px 220px;
+  display: flex;
+  justify-content: space-between;
   gap: 1.5rem;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .footer-brand {
   display: flex;
   gap: 1rem;
   align-items: flex-start;
+  flex: 1;
 }
 
 .footer-logo {
@@ -261,7 +265,7 @@ article a:hover {
 
 .footer-tagline {
   margin: 0;
-  color: var(--font-color-main);
+  color: var(--accent-primary);
   font-size: 0.95rem;
   line-height: 1.4;
 }
@@ -271,6 +275,8 @@ article a:hover {
   margin: 0 0 0.5rem 0;
   color: var(--font-color-main);
   font-size: 1rem;
+  width: 200px;
+  flex-shrink: 0;
 }
 
 .footer-nav {
