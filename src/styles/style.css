@@ -195,9 +195,13 @@ article a:hover {
   left: 0;
   width: 100%;
   color: var(--font-color-subtle);
-  background-color: var(--bg-color-dark);
   padding: 1.5rem 1rem;
   border-top: 1px solid var(--border-color);
+  background-color: var(--bg-color-dark);
+  background-image: url("../assets/images/bg-overlay.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .footer-links {
