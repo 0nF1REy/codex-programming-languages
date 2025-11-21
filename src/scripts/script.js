@@ -3,12 +3,12 @@ let dados = [];
 const botaoBusca = document.getElementById("botao-busca");
 const inputBusca = document.querySelector("header input");
 const cardContainer = document.querySelector(".card-container");
+let isIntroAnimated = false;
 
 async function buscarLinguagens() {
   if (dados.length > 0) {
     return dados;
   }
-
   try {
     const resposta = await fetch("./data/data.json");
     if (!resposta.ok) {
@@ -38,7 +38,6 @@ function exibirResultados(resultados) {
       img.className = "lang-logo";
       img.alt = `Logo ${lang.name}`;
       img.src = lang.image;
-
       img.addEventListener("error", () => {
         if (!img.dataset.fallbackUsed) {
           img.dataset.fallbackUsed = "1";
@@ -50,7 +49,6 @@ function exibirResultados(resultados) {
           img.setAttribute("aria-hidden", "true");
         }
       });
-
       article.appendChild(img);
     }
 
@@ -76,24 +74,40 @@ function exibirResultados(resultados) {
     content.appendChild(pYear);
     content.appendChild(pDesc);
     content.appendChild(a);
-
     article.appendChild(content);
     cardContainer.appendChild(article);
   });
+
+  if (isIntroAnimated) {
+    gsap.from(".card-container article", {
+      autoAlpha: 0,
+      y: 20,
+      stagger: 0.08,
+      duration: 0.5,
+      ease: "power3.out",
+    });
+  }
 }
 
 async function iniciarBusca() {
   const linguagens = await buscarLinguagens();
-
-  if (linguagens.length === 0) {
-    return;
-  }
+  if (linguagens.length === 0) return;
 
   const termoBusca = inputBusca.value.toLowerCase();
   const resultados = linguagens.filter((lang) =>
     lang.name.toLowerCase().includes(termoBusca)
   );
-  exibirResultados(resultados);
+
+  gsap.to(".card-container article", {
+    autoAlpha: 0,
+    y: 20,
+    stagger: 0.05,
+    duration: 0.4,
+    ease: "power3.in",
+    onComplete: () => {
+      exibirResultados(resultados);
+    },
+  });
 }
 
 async function setup() {
@@ -107,80 +121,86 @@ async function setup() {
     }
   });
 
-  function setupHeaderScrollBehavior() {
-    const header = document.querySelector("header");
-    if (!header) return;
-    const threshold = 122;
-
-    const onScroll = () => {
-      if (window.scrollY > threshold) {
-        header.classList.add("header--scrolled");
-      } else {
-        header.classList.remove("header--scrolled");
-      }
-    };
-
-    const mq = window.matchMedia("(min-width: 769px)");
-    let attached = false;
-
-    const attach = () => {
-      if (!attached) {
-        window.addEventListener("scroll", onScroll, { passive: true });
-        attached = true;
-      }
-      onScroll();
-    };
-
-    const detach = () => {
-      if (attached) {
-        window.removeEventListener("scroll", onScroll);
-        attached = false;
-      }
-
-      header.classList.remove("header--scrolled");
-    };
-
-    if (mq.matches) attach();
-    else detach();
-
-    const mqChangeHandler = (e) => {
-      if (e.matches) attach();
-      else detach();
-    };
-
-    let mqListenerType = null;
-
-    if (typeof mq.addEventListener === "function") {
-      mq.addEventListener("change", mqChangeHandler);
-      mqListenerType = "event";
-    } else if ("onchange" in mq) {
-      mq.onchange = mqChangeHandler;
-      mqListenerType = "onchange";
-    }
-
-    window.addEventListener("beforeunload", () => {
-      if (attached) window.removeEventListener("scroll", onScroll);
-      if (
-        mqListenerType === "event" &&
-        typeof mq.removeEventListener === "function"
-      ) {
-        mq.removeEventListener("change", mqChangeHandler);
-      } else if (mqListenerType === "onchange") {
-        mq.onchange = null;
-      }
-    });
-  }
-
   setupHeaderScrollBehavior();
-  if (typeof gsap !== "undefined") runIntroAnimation();
+
+  if (typeof gsap !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+    runIntroAnimation();
+    setupFooterAnimation();
+  }
 }
 
-document.addEventListener("DOMContentLoaded", setup);
+function setupHeaderScrollBehavior() {
+  const header = document.querySelector("header");
+  if (!header) return;
+  const threshold = 122;
+
+  const onScroll = () => {
+    if (window.scrollY > threshold) {
+      header.classList.add("header--scrolled");
+    } else {
+      header.classList.remove("header--scrolled");
+    }
+  };
+
+  const mq = window.matchMedia("(min-width: 769px)");
+  let attached = false;
+
+  const attach = () => {
+    if (!attached) {
+      window.addEventListener("scroll", onScroll, { passive: true });
+      attached = true;
+    }
+    onScroll();
+  };
+
+  const detach = () => {
+    if (attached) {
+      window.removeEventListener("scroll", onScroll);
+      attached = false;
+    }
+    header.classList.remove("header--scrolled");
+  };
+
+  if (mq.matches) attach();
+  else detach();
+
+  const mqChangeHandler = (e) => {
+    if (e.matches) attach();
+    else detach();
+  };
+
+  let mqListenerType = null;
+
+  if (typeof mq.addEventListener === "function") {
+    mq.addEventListener("change", mqChangeHandler);
+    mqListenerType = "event";
+  } else if ("onchange" in mq) {
+    mq.onchange = mqChangeHandler;
+    mqListenerType = "onchange";
+  }
+
+  window.addEventListener("beforeunload", () => {
+    if (attached) window.removeEventListener("scroll", onScroll);
+    if (
+      mqListenerType === "event" &&
+      typeof mq.removeEventListener === "function"
+    ) {
+      mq.removeEventListener("change", mqChangeHandler);
+    } else if (mqListenerType === "onchange") {
+      mq.onchange = null;
+    }
+  });
+}
 
 function runIntroAnimation() {
   const pre = document.getElementById("preloader");
   if (!pre || typeof gsap === "undefined") return;
-  const tl = gsap.timeline();
+  const tl = gsap.timeline({
+    onComplete: () => {
+      isIntroAnimated = true;
+    },
+  });
   tl.set(document.body, { overflow: "hidden" });
   tl.from(".preloader-inner", {
     autoAlpha: 0,
@@ -222,3 +242,20 @@ function runIntroAnimation() {
     "-=.35"
   );
 }
+
+function setupFooterAnimation() {
+  gsap.from(".footer-inner > *", {
+    scrollTrigger: {
+      trigger: ".footer",
+      start: "top 90%",
+      toggleActions: "play none none resume",
+    },
+    autoAlpha: 0,
+    y: 40,
+    duration: 0.8,
+    stagger: 0.2,
+    ease: "power3.out",
+  });
+}
+
+document.addEventListener("DOMContentLoaded", setup);
