@@ -138,5 +138,180 @@
     "year": 1990,
     "link": "https://www.haskell.org/documentation/",
     "image": "assets/images/programming-languages/haskell.svg"
+  },
+  {
+    "name": "SQL",
+    "description": "Linguagem de consulta estruturada usada para gerenciar e manipular bancos de dados relacionais. É fundamental para a maioria das aplicações de software que dependem de armazenamento de dados estruturados.",
+    "year": 1974,
+    "link": "https://www.iso.org/standard/66803.html",
+    "image": "assets/images/programming-languages/sql.svg"
+  },
+  {
+    "name": "HTML",
+    "description": "HyperText Markup Language é a linguagem padrão de marcação para criação de páginas web. É a espinha dorsal de qualquer conteúdo exibido em um navegador.",
+    "year": 1993,
+    "link": "https://html.spec.whatwg.org/",
+    "image": "assets/images/programming-languages/html.svg"
+  },
+  {
+    "name": "CSS",
+    "description": "Cascading Style Sheets é uma linguagem de folha de estilo usada para descrever a apresentação de um documento escrito em uma linguagem de marcação, como HTML. Essencial para design responsivo e visualização web.",
+    "year": 1996,
+    "link": "https://www.w3.org/Style/CSS/",
+    "image": "assets/images/programming-languages/css.svg"
+  },
+  {
+    "name": "Erlang",
+    "description": "Linguagem de programação funcional projetada para construir sistemas distribuídos, tolerantes a falhas e em tempo real, famosa por seu uso em telecomunicações.",
+    "year": 1986,
+    "link": "https://www.erlang.org/",
+    "image": "assets/images/programming-languages/erlang.svg"
+  },
+  {
+    "name": "Elixir",
+    "description": "Linguagem dinâmica e funcional que roda na máquina virtual Erlang (BEAM). Combina a sintaxe elegante inspirada em Ruby com o poder de concorrência e tolerância a falhas do Erlang.",
+    "year": 2012,
+    "link": "https://elixir-lang.org/",
+    "image": "assets/images/programming-languages/elixir.svg"
+  },
+  {
+    "name": "Clojure",
+    "description": "Um dialeto do Lisp que roda na Java Virtual Machine (JVM). É uma linguagem funcional focada em imutabilidade e concorrência, oferecendo grande interoperabilidade com ecossistemas Java e JavaScript.",
+    "year": 2007,
+    "link": "https://clojure.org/",
+    "image": "assets/images/programming-languages/clojure.svg"
+  },
+  {
+    "name": "Groovy",
+    "description": "Linguagem dinâmica para a plataforma Java, que se integra perfeitamente com qualquer programa Java. É frequentemente usada para scripting, automação de testes e construção de aplicações web (via Grails).",
+    "year": 2003,
+    "link": "https://groovy-lang.org/",
+    "image": "assets/images/programming-languages/groovy.svg"
+  },
+  {
+    "name": "Julia",
+    "description": "Linguagem de programação dinâmica de alto nível, projetada para computação numérica e científica. É conhecida por seu desempenho próximo ao de linguagens compiladas como C e Fortran.",
+    "year": 2012,
+    "link": "https://julialang.org/",
+    "image": "assets/images/programming-languages/julia.svg"
+  },
+  {
+    "name": "F#",
+    "description": "Linguagem de programação funcional-primeira, desenvolvida pela Microsoft. Roda na plataforma .NET e é valorizada por sua concisão, robustez e segurança de tipos.",
+    "year": 2005,
+    "link": "https://fsharp.org/",
+    "image": "assets/images/programming-languages/f-sharp.svg"
+  },
+  {
+    "name": "Zig",
+    "description": "Linguagem de programação de sistemas focada em robustez, otimização e manutenção. É vista como uma alternativa moderna ao C, oferecendo controle de baixo nível sem um coletor de lixo.",
+    "year": 2016,
+    "link": "https://ziglang.org/",
+    "image": "assets/images/programming-languages/zig.svg"
+  },
+  {
+    "name": "COBOL",
+    "description": "Common Business-Oriented Language. Uma das linguagens mais antigas, ainda essencial em sistemas legados de grandes instituições financeiras e governamentais devido à sua confiabilidade.",
+    "year": 1959,
+    "link": "https://www.iso.org/standard/74212.html",
+    "image": "assets/images/programming-languages/cobol.svg"
+  },
+  {
+    "name": "Delphi",
+    "description": "Um ambiente de desenvolvimento rápido de aplicações (RAD) que utiliza Object Pascal. É amplamente usado para desenvolver aplicações nativas de desktop e móveis de alto desempenho.",
+    "year": 1995,
+    "link": "https://www.embarcadero.com/products/delphi",
+    "image": "assets/images/programming-languages/delphi.svg"
+  },
+  {
+    "name": "Prolog",
+    "description": "Linguagem de programação lógica, baseada em fatos e regras. É utilizada principalmente em inteligência artificial, processamento de linguagem natural e sistemas especialistas.",
+    "year": 1972,
+    "link": "https://www.swi-prolog.org/",
+    "image": "assets/images/programming-languages/prolog.svg"
+  },
+  {
+    "name": "Smalltalk",
+    "description": "Uma das primeiras linguagens puramente orientadas a objetos. É conhecida por seu ambiente de desenvolvimento inovador e por influenciar diversas linguagens modernas.",
+    "year": 1972,
+    "link": "https://www.smalltalk.org/",
+    "image": "assets/images/programming-languages/smalltalk.svg"
+  },
+  {
+    "name": "Assembly Language",
+    "description": "Linguagem de programação de baixo nível que possui uma correspondência muito forte entre as instruções da linguagem e o código de máquina do processador. Essencial para otimização e drivers de hardware.",
+    "year": 1949,
+    "link": "https://www.asmcommunity.net/",
+    "image": "assets/images/programming-languages/assembly-language.svg"
+  },
+  {
+    "name": "Tcl",
+    "description": "Tool Command Language é uma linguagem de scripting dinâmica, geralmente usada em conjunto com o kit de ferramentas gráficas Tk para desenvolvimento rápido de interfaces gráficas (GUIs).",
+    "year": 1988,
+    "link": "https://www.tcl.tk/",
+    "image": "assets/images/programming-languages/tcl.svg"
+  },
+  {
+    "name": "PowerShell",
+    "description": "Shell de linha de comando e linguagem de scripting desenvolvida pela Microsoft para automação de tarefas e gerenciamento de configurações em sistemas Windows e multiplataforma.",
+    "year": 2006,
+    "link": "https://docs.microsoft.com/en-us/powershell/",
+    "image": "assets/images/programming-languages/powershell.svg"
+  },
+  {
+    "name": "Bash",
+    "description": "Bourne Again SHell, o interpretador de linha de comando padrão na maioria dos sistemas Unix e Linux. É crucial para scripting de sistema e automação de tarefas administrativas.",
+    "year": 1989,
+    "link": "https://www.gnu.org/software/bash/",
+    "image": "assets/images/programming-languages/bash.svg"
+  },
+  {
+    "name": "OCaml",
+    "description": "Uma linguagem de programação da família ML, conhecida por seu forte sistema de tipos estático, inferência de tipos e foco em programação funcional e imperativa, com excelente desempenho.",
+    "year": 1996,
+    "link": "https://ocaml.org/",
+    "image": "assets/images/programming-languages/ocaml.svg"
+  },
+  {
+    "name": "VHDL",
+    "description": "VHSIC Hardware Description Language. Uma linguagem de descrição de hardware usada para modelar sistemas digitais, como FPGAs e ASICs, na engenharia eletrônica.",
+    "year": 1987,
+    "link": "https://vhdlwhiz.com/",
+    "image": "assets/images/programming-languages/vhdl.svg"
+  },
+  {
+    "name": "MATLAB",
+    "description": "Linguagem de programação e ambiente interativo para computação numérica, visualização e programação. Amplamente utilizado em engenharia, ciência e finanças.",
+    "year": 1984,
+    "link": "https://www.mathworks.com/products/matlab.html",
+    "image": "assets/images/programming-languages/matlab.svg"
+  },
+  {
+    "name": "Scheme",
+    "description": "Um dialeto minimalista e elegante do Lisp, conhecido por ser uma das primeiras linguagens a suportar funções de primeira classe e ser usada extensivamente no ensino de ciência da computação.",
+    "year": 1975,
+    "link": "https://schemers.org/",
+    "image": "assets/images/programming-languages/scheme.svg"
+  },
+  {
+    "name": "ReasonML",
+    "description": "Uma sintaxe amigável (inspirada em JavaScript) e ferramenta chain para OCaml. Permite que desenvolvedores criem código seguro e performático, frequentemente compilado para JavaScript (via BuckleScript/ReScript).",
+    "year": 2016,
+    "link": "https://reasonml.github.io/",
+    "image": "assets/images/programming-languages/reasonml.svg"
+  },
+  {
+    "name": "Awk",
+    "description": "Linguagem de programação projetada para processamento de padrões e relatórios. É frequentemente usada para manipular dados baseados em texto em ambientes Unix/Linux.",
+    "year": 1977,
+    "link": "https://www.gnu.org/software/gawk/",
+    "image": "assets/images/programming-languages/awk.svg"
+  },
+  {
+    "name": "Crystal",
+    "description": "Linguagem de propósito geral com sintaxe inspirada em Ruby, mas que é compilada e tem um sistema de tipos estático. Oferece alto desempenho e concorrência nativa.",
+    "year": 2014,
+    "link": "https://crystal-lang.org/",
+    "image": "assets/images/programming-languages/crystal.svg"
   }
 ]
