@@ -2,13 +2,32 @@ import * as fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 
+async function findProjectRoot(startDir) {
+  let currentDir = startDir;
+  while (true) {
+    try {
+      await fs.access(path.join(currentDir, "package.json"));
+      return currentDir;
+    } catch (e) {
+      const parentDir = path.dirname(currentDir);
+      if (parentDir === currentDir) {
+        throw new Error(
+          "Não foi possível encontrar a raiz do projeto (package.json não encontrado)."
+        );
+      }
+      currentDir = parentDir;
+    }
+  }
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const projectRoot = await findProjectRoot(__dirname);
+const KNOWLEDGE_FILE = path.join(projectRoot, "src", "data", "data.json");
 
 const apiKey = process.env.GEMINI_API_KEY;
-const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
-const KNOWLEDGE_FILE = path.join(__dirname, "..", "src", "data", "data.json");
+const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
 const TOTAL_ITEMS = 25;
 
@@ -17,22 +36,13 @@ const responseSchema = {
   items: {
     type: "OBJECT",
     properties: {
-      name: {
-        type: "STRING",
-        description: "Nome da tecnologia.",
-      },
+      name: { type: "STRING", description: "Nome da tecnologia." },
       description: {
         type: "STRING",
         description: "Descrição detalhada e clara.",
       },
-      year: {
-        type: "NUMBER",
-        description: "Ano de criação da tecnologia.",
-      },
-      link: {
-        type: "STRING",
-        description: "URL oficial da tecnologia.",
-      },
+      year: { type: "NUMBER", description: "Ano de criação da tecnologia." },
+      link: { type: "STRING", description: "URL oficial da tecnologia." },
       image: {
         type: "STRING",
         description:
@@ -49,50 +59,34 @@ async function generateNewKnowledge(existingKnowledge) {
   const existingNames = existingKnowledge.map((item) => item.name).join(", ");
 
   const systemPrompt = `
-Você é um especialista em linguagens de programação. 
-Sua tarefa é gerar exatamente ${TOTAL_ITEMS} NOVAS LINGUAGENS DE PROGRAMAÇÃO seguindo ESTRITAMENTE o formato:
-
-{
-  "name": "Nome da linguagem",
-  "description": "Descrição clara e detalhada.",
-  "year": 1990,
-  "link": "https://site-oficial.com",
-  "image": "assets/images/programming-languages/<nome-em-kebab-case>.svg"
-}
+Você é um especialista em linguagens de programação para desenvolvimento de software.
+Sua tarefa é gerar uma lista de EXATAMENTE ${TOTAL_ITEMS} NOVAS LINGUAGENS DE PROGRAMAÇÃO, seguindo estritamente o formato JSON especificado.
 
 Regras obrigatórias:
-- Apenas linguagens de programação. NÃO inclua frameworks, bibliotecas, APIs, bancos de dados, ferramentas ou sistemas.
-- O ARRAY deve conter EXATAMENTE ${TOTAL_ITEMS} itens.
-- Todos os nomes devem ser únicos.
-- NÃO repita nenhum nome já existente na base atual.
-- A propriedade "year" deve ser um número inteiro.
-- O campo "image" deve sempre seguir o padrão:
-  assets/images/programming-languages/<nome-da-linguagem-minusculo-sem-espaços>.svg
-- As linguagens devem ser populares, relevantes e amplamente utilizadas atualmente.
-- NÃO use tags, NÃO use campos extras — apenas as 5 chaves:
-  name, description, year, link, image.
+1.  **FOCO:** Apenas linguagens de programação de propósito geral ou de domínio específico para software.
+2.  **EXCLUSÕES:** NÃO inclua frameworks, bibliotecas, APIs, bancos de dados, ferramentas, sistemas operacionais, linguagens de script de shell (como Bash, PowerShell) ou linguagens de descrição de hardware (como VHDL, Verilog).
+3.  **QUANTIDADE:** O array JSON de resposta deve conter EXATAMENTE ${TOTAL_ITEMS} itens.
+4.  **UNICIDADE:** Todos os nomes de linguagens devem ser únicos e não podem estar na lista de nomes já existentes.
+5.  **FORMATO DO CAMPO 'image'**: Deve sempre seguir o padrão: assets/images/programming-languages/<nome-da-linguagem-em-kebab-case>.svg
+6.  **RELEVÂNCIA:** As linguagens devem ser reais, populares e relevantes para o desenvolvimento de software moderno.
+7.  **ESTRUTURA:** A resposta deve ser apenas o array JSON, sem nenhum texto ou explicação adicional.
 `;
 
   const userQuery = `
-Gere uma lista com EXATAMENTE ${TOTAL_ITEMS} novas LINGUAGENS DE PROGRAMAÇÃO, sem repetir NENHUM dos nomes já existentes: ${existingNames}.
+Gere uma lista com EXATAMENTE ${TOTAL_ITEMS} novas LINGUAGENS DE PROGRAMAÇÃO para desenvolvimento de software, sem repetir NENHUM dos nomes já existentes: ${existingNames}.
 
-O resultado deve ser um ARRAY JSON **somente** com objetos contendo:
-name, description, year, link, image.
+O resultado deve ser um ARRAY JSON **puro**, sem nenhum texto adicional. Cada objeto no array deve conter apenas as seguintes chaves: name, description, year, link, image.
 
-Formato obrigatório para TODOS os itens:
+Exemplo de formato para cada item:
 {
-  "name": "Nome da linguagem",
-  "description": "Descrição detalhada da linguagem de programação.",
-  "year": 1990,
-  "link": "https://documentacao-oficial.com",
-  "image": "assets/images/programming-languages/<nome-da-linguagem-minusculo-sem-espaços>.svg"
+  "name": "Nome da Linguagem",
+  "description": "Uma descrição clara e detalhada da linguagem e seus principais casos de uso.",
+  "year": 1995,
+  "link": "https://site-oficial.com",
+  "image": "assets/images/programming-languages/nome-da-linguagem.svg"
 }
 
-IMPORTANTE:
-- Apenas linguagens de programação. NÃO inclua frameworks, bibliotecas, APIs, bancos de dados ou ferramentas.
-- Todas as linguagens devem ser reais, populares e relevantes atualmente.
-
-Apenas responda com o JSON puro, sem explicações.
+IMPORTANTE: Lembre-se de excluir explicitamente linguagens de script de shell e de descrição de hardware.
 `;
 
   const payload = {
@@ -104,13 +98,12 @@ Apenas responda com o JSON puro, sem explicações.
     },
   };
 
-  let response;
   let retries = 0;
   const maxRetries = 5;
 
   while (retries < maxRetries) {
     try {
-      response = await fetch(apiUrl, {
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -120,32 +113,26 @@ Apenas responda com o JSON puro, sem explicações.
         const result = await response.json();
         const jsonText = result.candidates?.[0]?.content?.parts?.[0]?.text;
 
-        if (jsonText) {
-          try {
-            const newKnowledge = JSON.parse(jsonText);
-
-            if (
-              Array.isArray(newKnowledge) &&
-              newKnowledge.length === TOTAL_ITEMS
-            ) {
-              console.log(
-                `Sucesso! ${TOTAL_ITEMS} novos itens gerados pela API.`
-              );
-              return newKnowledge;
-            } else {
-              throw new Error(
-                `O array retornado não contém ${TOTAL_ITEMS} itens. Encontrados: ${
-                  Array.isArray(newKnowledge) ? newKnowledge.length : 0
-                }`
-              );
-            }
-          } catch (parseError) {
-            throw new Error(
-              "JSON malformado ou incompleto na resposta da API."
-            );
-          }
-        } else {
+        if (!jsonText) {
           throw new Error("Resposta da API vazia ou sem conteúdo textual.");
+        }
+
+        const newKnowledge = JSON.parse(jsonText);
+
+        if (
+          Array.isArray(newKnowledge) &&
+          newKnowledge.length === TOTAL_ITEMS
+        ) {
+          console.log(`Sucesso! ${TOTAL_ITEMS} novos itens gerados pela API.`);
+          return newKnowledge;
+        } else {
+          throw new Error(
+            `O array retornado não contém ${TOTAL_ITEMS} itens. Encontrados: ${
+              Array.isArray(newKnowledge)
+                ? newKnowledge.length
+                : "não é um array"
+            }`
+          );
         }
       } else {
         throw new Error(
@@ -154,12 +141,14 @@ Apenas responda com o JSON puro, sem explicações.
       }
     } catch (error) {
       retries++;
+      console.warn(`Tentativa ${retries} falhou: ${error.message}`);
       if (retries < maxRetries) {
         const waitTime = Math.pow(2, retries) * 1000;
+        console.log(`Aguardando ${waitTime / 1000}s para tentar novamente...`);
         await delay(waitTime);
       } else {
         throw new Error(
-          `Falha ao gerar o conhecimento após várias tentativas: ${error.message}`
+          `Falha ao gerar o conhecimento após ${maxRetries} tentativas.`
         );
       }
     }
@@ -169,7 +158,7 @@ Apenas responda com o JSON puro, sem explicações.
 async function main() {
   if (!apiKey) {
     console.error(
-      "\n Erro: A variável de ambiente GEMINI_API_KEY não está definida."
+      "\n[ERRO] A variável de ambiente GEMINI_API_KEY não está definida."
     );
     console.log(
       "Por favor, crie um arquivo '.env' na raiz do projeto e defina a chave:"
@@ -179,6 +168,7 @@ async function main() {
   }
 
   try {
+    console.log(`Caminho do arquivo de dados sendo usado: ${KNOWLEDGE_FILE}`);
     let existingKnowledge = [];
     try {
       const data = await fs.readFile(KNOWLEDGE_FILE, "utf-8");
@@ -189,14 +179,14 @@ async function main() {
     } catch (e) {
       if (e.code === "ENOENT") {
         console.log(
-          `O arquivo ${KNOWLEDGE_FILE} não foi encontrado. Iniciando com uma base vazia.`
+          `Arquivo de dados não encontrado. Iniciando com uma base vazia.`
         );
       } else {
         throw new Error(`Erro ao ler/analisar ${KNOWLEDGE_FILE}: ${e.message}`);
       }
     }
 
-    console.log("Aumentando sua base de conhecimento!");
+    console.log("\nIniciando geração de novos itens...");
     const newKnowledge = await generateNewKnowledge(existingKnowledge);
 
     const totalKnowledge = [...existingKnowledge, ...newKnowledge];
@@ -209,14 +199,13 @@ async function main() {
       JSON.stringify(totalKnowledge, null, 2),
       "utf-8"
     );
-    console.log(`\n Sucesso!`);
     console.log(
-      `O arquivo '${KNOWLEDGE_FILE}' foi atualizado com ${totalKnowledge.length} itens.`
+      `\n Sucesso! O arquivo foi atualizado com ${totalKnowledge.length} itens.`
     );
   } catch (error) {
-    console.error("\n Erro fatal:", error.message);
+    console.error("\n Erro fatal no processo:", error.message);
     console.log(
-      "Verifique se sua chave de API está correta e se há conectividade."
+      "Verifique se sua chave de API está correta e se há conectividade com a internet."
     );
   }
 }
