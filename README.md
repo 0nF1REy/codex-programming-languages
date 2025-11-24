@@ -12,6 +12,21 @@
 
 </div>
 
+## 🧭 Guia de Navegação (Índice)
+
+- **[📖 Visão Geral](#descricao)**
+- **[📁 Estrutura Principal](#estrutura-principal)**
+- **[✨ Principais Funcionalidades](#principais-funcionalidades)**
+- **[🚀 Tecnologias Utilizadas](#tecnologias-utilizadas)**
+- **[🚀 Começando](#comecando)**
+- **[🛠️ Como Usar](#como-usar)**
+- **[👤 Sobre o Desenvolvedor](#-sobre-o-desenvolvedor)**
+- **[📜 Licença](#licenca)**
+
+<h2 align="center">
+  Codex Programming Languages
+</h2>
+
 <p align="center">
 Um catálogo web interativo de linguagens de programação com uma base de conhecimento que se expande automaticamente usando a API do Gemini.
 </p>
@@ -20,7 +35,7 @@ Um catálogo web interativo de linguagens de programação com uma base de conhe
 </div>
 <p align="center"><sub>Página Inicial</sub></p>
 
-## 📖 Visão Geral
+## 📖 Visão Geral <a name="descricao"></a>
 
 Este repositório reúne dois trabalhos complementares relacionados ao tema "linguagens e ferramentas de programação":
 
@@ -29,7 +44,7 @@ Este repositório reúne dois trabalhos complementares relacionados ao tema "lin
 
 O objetivo conjunto é fornecer uma vitrine (site) alimentada por uma base de dados que pode ser aumentada automaticamente pelo gerador.
 
-## 📁 Estrutura Principal
+## 📁 Estrutura Principal <a name="estrutura-principal"></a>
 
 - `knowledge-generator/` — Script Node.js com a lógica do Gemini.
 - `resources/` — Imagens e assets para a documentação.
@@ -38,7 +53,7 @@ O objetivo conjunto é fornecer uma vitrine (site) alimentada por uma base de da
 - `package.json` — Dependências e scripts do projeto.
 - `README.md` — Esta documentação.
 
-## ✨ Principais Funcionalidades
+## ✨ Principais Funcionalidades <a name="principais-funcionalidades"></a>
 
 O projeto é dividido em duas partes principais: uma interface de usuário rica e um gerador de conteúdo inteligente.
 
@@ -62,7 +77,7 @@ O projeto é dividido em duas partes principais: uma interface de usuário rica 
 
 - Robusto e Resiliente: Implementa um sistema de tentativas com backoff exponencial para lidar com falhas de rede ou instabilidades da API.
 
-## 🚀 Tecnologias Utilizadas
+## 🚀 Tecnologias Utilizadas <a name="tecnologias-utilizadas"></a>
 
 ![alt text](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![alt text](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.dot.js&logoColor=white)
@@ -72,7 +87,7 @@ O projeto é dividido em duas partes principais: uma interface de usuário rica 
 ![alt text](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![alt text](https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=white)
 
-## 🚀 Começando
+## 🚀 Começando <a name="comecando"></a>
 
 Para executar este projeto localmente, siga os passos abaixo.
 
@@ -100,7 +115,7 @@ GEMINI_API_KEY="SUA_CHAVE_AQUI"
 npm install
 ```
 
-## 🛠️ Como Usar
+## 🛠️ Como Usar <a name="como-usar"></a>
 
 **1. Gerador de Conhecimento (Backend)**
 
@@ -124,7 +139,7 @@ Acesse **http://localhost:3000** (ou a porta indicada no seu terminal) no seu na
 
 ---
 
-## 👤 Sobre o Desenvolvedor
+## 👤 Sobre o Desenvolvedor <a name="sobre-o-desenvolvedor"></a>
 
 <div align="center">
 
